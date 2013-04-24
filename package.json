@@ -9,6 +9,7 @@
     "express": "3.2.0",
     "jade": "*",
     "mongoose": ">= 2.4.0",
-    "session-mongoose": ">= 0.0.1"
+    "session-mongoose": ">= 0.0.1",
+    "socket.io": "~0.9.6"
   }
 }

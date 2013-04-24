@@ -1,8 +1,7 @@
 var express = require('express'),
-    routes = require('./routes'),
-    user = require('./routes/user'),
     http = require('http'),
-    path = require('path');
+    path = require('path'),
+    io   = require('socket.io');
 
 var app = express();
 
@@ -51,3 +50,6 @@ app.use(function(req, res, next){
 
 console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
 app.listen(app.get('port'));
+
+var socket = io.listen(app);
+

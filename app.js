@@ -3,8 +3,10 @@ var express = require('express'),
     path = require('path'),
     io   = require('socket.io');
 
-var app = express();
+var app    = express();
+var server = http.createServer(app);
 
+var SessionStore = require("session-mongoose")(express);
 var database     = require('./lib/Database');
 var errorHandler = require('./lib/ErrorHandler');
 var loginPages   = require('./lib/LoginPages');
@@ -20,7 +22,13 @@ app.configure(function(){
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.cookieParser());
-
+    
+    var mongooseSessionStore = new SessionStore({
+        url: "mongodb://localhost/mv",
+        interval: 1200000
+    });
+    
+    app.use(express.session( {cookie: {maxAge: 1200000}, store: mongooseSessionStore, secret: "secret" }));
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -51,5 +59,8 @@ app.use(function(req, res, next){
 console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
 app.listen(app.get('port'));
 
-var socket = io.listen(app);
+var socket = io.listen(server);
 
+socket.sockets.on('connection', function(socket){
+    console.log('socket connected.');
+});

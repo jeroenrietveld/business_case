@@ -1,21 +1,23 @@
-h2 Login
- 
-div.loginform
-	form(method="post")
-		h3 Login
-		
-		- if(typeof(error_text) != 'undefined')
-			div.error
-				span=error_text
-		
-		span Login
-		- if(typeof(email) != 'undefined')
-			input(type="text", name="email", value=email)
-		- else
-			input(type="text", name="email")
-		br
-		span Password
-		input(type="password", name="password")
-		br
-		span &nbsp;
-		input(type="submit", value="Login")
+doctype 5
+html
+	head
+		title = "Cool"
+	body.login
+		article.wrapper
+			section.loginbox
+				form(method="post")
+					h2 Login
+					- if(typeof(error_text) != 'undefined')
+						div.error
+							span error_text
+
+					- if(typeof(boardID) != 'undefined')
+						input(type="text", name="boardID", value=boardID)
+					- else
+						input(type="text", name="boardID", placeholder="Fill in your BoardID")
+
+					- if(typeof(password) != 'undefined')
+						input(type="password", name="password", value=password)
+					- else
+						input(type="password", name="password", placeholder="Fill in your password")
+

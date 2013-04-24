@@ -1,0 +1,12 @@
+2013-04-24T12:31:42.532Z - Error: 
+SyntaxError: Unexpected identifier
+    at Object.Function (unknown source)
+    at Object.exports.compile (/Users/jeroen/Sites/school/business_case/node_modules/jade/lib/jade.js:171:8)
+    at Object.exports.render (/Users/jeroen/Sites/school/business_case/node_modules/jade/lib/jade.js:205:17)
+    at View.exports.renderFile [as engine] (/Users/jeroen/Sites/school/business_case/node_modules/jade/lib/jade.js:233:13)
+    at View.render (/Users/jeroen/Sites/school/business_case/node_modules/express/lib/view.js:75:8)
+    at Function.app.render (/Users/jeroen/Sites/school/business_case/node_modules/express/lib/application.js:501:10)
+    at ServerResponse.res.render (/Users/jeroen/Sites/school/business_case/node_modules/express/lib/response.js:755:7)
+    at Object.LoginPages.pageIndex (/Users/jeroen/Sites/school/business_case/lib/LoginPages.js:81:7)
+    at LoginPages.initPages (/Users/jeroen/Sites/school/business_case/lib/LoginPages.js:22:46)
+    at callbacks (/Users/jeroen/Sites/school/business_case/node_modules/express/lib/router/index.js:161:37)

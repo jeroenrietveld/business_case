@@ -1,10 +1,8 @@
 var express = require('express'),
-    http = require('http'),
-    path = require('path'),
-    io   = require('socket.io');
+    http    = require('http'),
+    path    = require('path');
 
-var app    = express();
-var server = http.createServer(app);
+var app = express();
 
 var SessionStore = require("session-mongoose")(express);
 var database     = require('./lib/Database');
@@ -15,7 +13,6 @@ var db           = new database();
 var lp           = new loginPages();
 var gp           = new gamePages();
 
-// all environments
 app.configure(function(){
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
@@ -56,11 +53,13 @@ app.use(function(req, res, next){
     res.render('error/error.jade', {title: "404 - Page Not Found", showFullNav: false, status: 404, url: req.url});
 });
 
-console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
-app.listen(app.get('port'));
+var server = http.createServer(app);
+var io =     require('socket.io').listen(server);
 
-var socket = io.listen(server);
+server.listen(app.get('port'), function(){
+    console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
+});
 
-socket.sockets.on('connection', function(socket){
+io.sockets.on('connection', function(socket){
     console.log('socket connected.');
 });

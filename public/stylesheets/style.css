@@ -13,7 +13,10 @@ a {
 	position: absolute;
 	top: 320px;
 	left: 730px;
-	width: 160px;
+	width: 175px;
+}
+.loginbox form {
+	position:relative;
 }
 .loginbox form input[type=text], .loginbox form input[type=password] {
 	width:170px;
@@ -21,4 +24,17 @@ a {
 	border:3px solid black;
 	border-radius: 10px;
 	margin:0 0 15px 0;
+}
+.loginbox button {
+	font-weight:bold;
+	height: 30px;
+	width: 75px;
+	font-size: 20px;
+	border: 3px solid black;
+	border-radius: 10px;
+	background: white;
+	padding: 0px 0px 1px 0px;
+	position:absolute;
+	bottom:-20px;
+	right:0;
 }

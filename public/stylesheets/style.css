@@ -1,11 +1,24 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 body.login {
-	background:url('/images/loginBackground.png');
+	background:url('/images/login.png');
 }
 
 a {
   color: #00B7FF;
+}
+
+.loginbox {
+	position: absolute;
+	top: 320px;
+	left: 730px;
+	width: 160px;
+}
+.loginbox form input[type=text], .loginbox form input[type=password] {
+	width:170px;
+	height:45px;
+	border:3px solid black;
+	border-radius: 10px;
+	margin:0 0 15px 0;
 }

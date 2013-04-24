@@ -2,11 +2,11 @@ doctype 5
 html
 	head
 		title = "Business case"
+		link(rel='stylesheet', href='/stylesheets/style.css')
 	body.login
 		article.wrapper
 			section.loginbox
 				form(method="post")
-					h2 Login
 					- if(typeof(error_text) != 'undefined')
 						div.error
 							span error_text

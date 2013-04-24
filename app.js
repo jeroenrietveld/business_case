@@ -12,6 +12,8 @@ var gamePages    = require('./lib/GamePages');
 var db           = new database();
 var lp           = new loginPages();
 var gp           = new gamePages();
+var sockets      = [];
+var arduinos     = [];
 
 app.configure(function(){
     app.set('views', __dirname + '/views');
@@ -54,7 +56,7 @@ app.use(function(req, res, next){
 });
 
 var server = http.createServer(app);
-var io =     require('socket.io').listen(server);
+var io     = require('socket.io').listen(server);
 
 server.listen(app.get('port'), function(){
     console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
@@ -62,4 +64,7 @@ server.listen(app.get('port'), function(){
 
 io.sockets.on('connection', function(socket){
     console.log('socket connected.');
+    sockets.push(socket);
+
+    console.log(socket);
 });

@@ -9,15 +9,15 @@ html
 				form(method="post")
 					- if(typeof(error_text) != 'undefined')
 						div.error
-							span error_text
+							span #{error_text}
 
 					- if(typeof(boardID) != 'undefined')
-						input(type="text", name="boardID", value=boardID)
+						input(type="text", name="boardID", value=#{boardID})
 					- else
 						input(type="text", name="boardID", placeholder="Fill in your BoardID")
 
 					- if(typeof(password) != 'undefined')
-						input(type="password", name="password", value=password)
+						input(type="password", name="password", value=#{password})
 					- else
 						input(type="password", name="password", placeholder="Fill in your password")
 					button(type="submit") Login

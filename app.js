@@ -14,6 +14,11 @@ var lp           = new loginPages();
 var gp           = new gamePages();
 var sockets      = [];
 var arduinos     = [];
+    
+var mongooseSessionStore = new SessionStore({
+    url: "mongodb://localhost/business_case",
+    interval: 1200000
+});
 
 app.configure(function(){
     app.set('views', __dirname + '/views');
@@ -21,11 +26,6 @@ app.configure(function(){
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.cookieParser());
-    
-    var mongooseSessionStore = new SessionStore({
-        url: "mongodb://localhost/mv",
-        interval: 1200000
-    });
     
     app.use(express.session( {cookie: {maxAge: 1200000}, store: mongooseSessionStore, secret: "secret" }));
     app.use(app.router);
@@ -55,16 +55,35 @@ app.use(function(req, res, next){
     res.render('error/error.jade', {title: "404 - Page Not Found", showFullNav: false, status: 404, url: req.url});
 });
 
-var server = http.createServer(app);
-var io     = require('socket.io').listen(server);
+var server      = http.createServer(app);
 
 server.listen(app.get('port'), function(){
     console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
 });
 
-io.sockets.on('connection', function(socket){
-    console.log('socket connected.');
-    sockets.push(socket);
+var io           = require('socket.io').listen(server);
+var connect      = require('connect');
+var cookie       = require('cookie');
 
-    console.log(socket);
+io.set('authorization', function (data, accept) {
+    // check if there's a cookie header
+    if (data.headers.cookie) {
+        // if there is, parse the cookie
+        data.cookie = connect.utils.parseSignedCookies(cookie.parse(decodeURIComponent(data.headers.cookie)),'secret');
+        // note that you will need to use the same key to grad the
+        // session id, as you specified in the Express setup.
+        console.log(data.cookie);
+        data.sessionID = data.cookie['connect.sid'];
+    } else {
+       // if there isn't, turn down the connection with a message
+       // and leave the function.
+       return accept('No cookie transmitted.', false);
+    }
+    // accept the incoming connection
+    accept(null, true);
+});
+
+io.sockets.on('connection', function(socket){
+    console.log('A socket with sessionID ' + socket.handshake.sessionID + ' connected!');
+    sockets.push(socket);
 });

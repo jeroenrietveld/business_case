@@ -1,5 +1,4 @@
 var socket = io.connect('http://localhost');
 
-socket.on('socket', function(data){
-	console.log(data);
-});
+//socket.emit('identify', connect.sid);
+console.log(document.cookie);

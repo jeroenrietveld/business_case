@@ -19,7 +19,6 @@ if(process.argv.length == 4){
 	});
 	
 }else{
-	console.error("Script requires exactly 2 arguments");
-	console.error("Usage: node addUser.js <email> <password>");
+	console.error("Usage: node newUser.js <email> <password>");
 	process.exit(1);
 }

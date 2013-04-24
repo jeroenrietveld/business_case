@@ -53,7 +53,7 @@ lp.initPages(app, db);
 gp.initPages(app);
 
 app.use(function(req, res, next){
-    res.render('error/404.jade', {title: "404 - Page Not Found", showFullNav: false, status: 404, url: req.url});
+    res.render('error/error.jade', {title: "404 - Page Not Found", showFullNav: false, status: 404, url: req.url});
 });
 
 console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);

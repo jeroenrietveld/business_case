@@ -8,4 +8,7 @@ $(document).ready(function() {
 		$('section.info').find('img').attr('src', card);
 		$('section.info').show();
 	})
+
+	
+
 });

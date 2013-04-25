@@ -62,6 +62,7 @@ server.listen(app.get('port'), function(){
 });
 
 var io            = require('socket.io').listen(server);
+var net           = require('net');
 var connect       = require('connect');
 var cookie        = require('cookie');
 var socketManager = require('./lib/SocketManager');
@@ -81,14 +82,23 @@ io.set('authorization', function (data, accept) {
 
 io.sockets.on('connection', function(socket){
     console.log('A socket with sessionID ' + socket.handshake.sessionID + ' connected!');
-    sockets.push(socket);
+    sockets[socket.handshake.sessionID] = socket;
 
     mongooseSessionStore.get(socket.handshake.sessionID, function(err, data){
         if(err || !data) {
             console.log(err);
             //handle error
         } else {
-            manager.set(socket, {boardID: data.boardID});
+            manager.set(data.boardID, {client: socket});
+            manager.setSession(socket.handshake.sessionID, { boardID: data.boardID });
+        }
+    });
+
+    socket.on('getData', function(data){
+        var board = manager.boardIDFromSession(socket.handshake.sessionID);
+        if(board) {
+            console.log('writing');
+            manager.get(board.boardID).board.write('SCGDEC');
         }
     });
 
@@ -97,3 +107,35 @@ io.sockets.on('connection', function(socket){
         manager.remove(socket);
     });
 });
+
+var arduino_server = net.createServer();
+
+arduino_server.on('connection', function(socket){
+    socket.write('SCLIEC');
+    
+    socket.on('data',function(data){
+        console.log('recieved data: ' + data);
+
+        data = data.toString();
+
+        if(data.substr(0, 2) == 'LU') {
+            var boardID = data.substr(2, 4);
+            var password = data.substr(6, 4);
+
+            var mBoard = manager.get(boardID);
+            if(mBoard) {
+                console.log(mBoard);
+                //set board client and board
+                manager.set(boardID, {client: mBoard.client, board: socket});
+                //tell client a board was found
+                manager.get(boardID).client.emit('gotBoard');
+            } else {
+                //no user logged in, handle
+                console.log('no user');
+            }
+        }
+    });
+});
+
+console.log('tcp server listening on port 1337');
+arduino_server.listen(1337);

@@ -9,3 +9,8 @@ $(document).ready(function() {
 		$('section.info').show();
 	})
 });
+
+socket.on('gotBoard', function(data){
+	console.log('got board');
+	socket.emit('getData');
+});

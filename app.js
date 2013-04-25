@@ -61,9 +61,11 @@ server.listen(app.get('port'), function(){
     console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
 });
 
-var io           = require('socket.io').listen(server);
-var connect      = require('connect');
-var cookie       = require('cookie');
+var io            = require('socket.io').listen(server);
+var connect       = require('connect');
+var cookie        = require('cookie');
+var socketManager = require('./lib/SocketManager');
+var manager       = new socketManager();
 
 io.set('authorization', function (data, accept) {
     if (data.headers.cookie) {
@@ -83,11 +85,15 @@ io.sockets.on('connection', function(socket){
 
     mongooseSessionStore.get(socket.handshake.sessionID, function(err, data){
         if(err || !data) {
+            console.log(err);
             //handle error
         } else {
-            //set socket data : data.boardID;
+            manager.set(socket, {boardID: data.boardID});
         }
     });
-    
-    console.log(socket);
+
+    socket.on('disconnect', function(data){
+        console.log('socket disconnected');
+        manager.remove(socket);
+    });
 });

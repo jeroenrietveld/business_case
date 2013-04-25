@@ -1,8 +1,61 @@
 doctype 5
 html
   head
-    title= "business case"
+    title="business case"
     script(src="/socket.io/socket.io.js");
+    script(src="/javascript/jquery.js");
     script(src="/javascript/game.js");
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/game.css')
+    mete(name="viewport", content="width=device-width, initial-scale=1")
   body
-    h1 Business Case
+    article.wrapper
+        section.top
+            section.info
+
+            section.battlefield
+                div.opponentfield.field
+                    - for (var i = 1; i < 11; ++i) {
+                        div.card
+                            img(id=i,src="/images/cards/Summoned_Skull.jpg", alt="Summoned Skull");
+                        - if(i==5) {
+                            
+                        - }
+                    - }
+                div.playerfield.field
+                    - for (var i = 11; i < 21; ++i) {
+                        div.card
+                            img(id=i,src="images/cards/blue_eyes.png", alt="Blue Eyes White Dragon")
+                    - }
+
+            section.opponent.player
+                div.profilePicture
+                    img(src="/images/game_girl.png",alt="Avatar")
+                h3 Life Points
+                div.lifebar
+                    span 1347/4000
+                
+                div.winLossRatio
+                span.wins Wins: 1000
+                span.losses Losses: 0
+        section.bottom
+            section.user.player
+                div.winLossRatio
+                    span.wins Wins: 1000
+                    span.losses Losses: 0
+                h3 Life Points
+                div.lifebar
+                    span 1347/4000
+                div.profilePicture
+                    img(src="/images/game_boy.png",alt="Avatar")
+            section.chat
+                nav.nav
+                    ul
+                        li chat
+                        li report
+                div.chatBox
+                    p.user1 User1: Lorum ipsum
+                    p.user2 User2: Wuuut...? 0_0
+                form
+                    input(type="text", name="message", placeholder="Fill in your message")
+                    button(type="submit") send

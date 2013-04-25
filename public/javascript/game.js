@@ -7,8 +7,10 @@ $(document).ready(function() {
 		$('section.info').html('<img src=""/>');
 		$('section.info').find('img').attr('src', card);
 		$('section.info').show();
-	})
+	});
+});
 
-	
-
+socket.on('gotBoard', function(data){
+	console.log('got board');
+	socket.emit('getData');
 });

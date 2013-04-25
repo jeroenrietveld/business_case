@@ -66,24 +66,28 @@ var connect      = require('connect');
 var cookie       = require('cookie');
 
 io.set('authorization', function (data, accept) {
-    // check if there's a cookie header
     if (data.headers.cookie) {
-        // if there is, parse the cookie
         data.cookie = connect.utils.parseSignedCookies(cookie.parse(decodeURIComponent(data.headers.cookie)),'secret');
-        // note that you will need to use the same key to grad the
-        // session id, as you specified in the Express setup.
-        console.log(data.cookie);
+
         data.sessionID = data.cookie['connect.sid'];
     } else {
-       // if there isn't, turn down the connection with a message
-       // and leave the function.
-       return accept('No cookie transmitted.', false);
+        return accept('No cookie transmitted.', false);
     }
-    // accept the incoming connection
+
     accept(null, true);
 });
 
 io.sockets.on('connection', function(socket){
     console.log('A socket with sessionID ' + socket.handshake.sessionID + ' connected!');
     sockets.push(socket);
+
+    mongooseSessionStore.get(socket.handshake.sessionID, function(err, data){
+        if(err || !data) {
+            //handle error
+        } else {
+            //set socket data : data.boardID;
+        }
+    });
+    
+    console.log(socket);
 });

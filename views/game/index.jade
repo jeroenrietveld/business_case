@@ -17,15 +17,15 @@ html
                 div.opponentfield.field
                     - for (var i = 1; i < 11; ++i) {
                         div.card
-                            //img(id=i, src="/images/cards/Summoned_Skull.jpg", alt="Summoned Skull");
+                            img(id=i, src="/images/cards/back.png", alt="Summoned Skull");
                         - if(i==5) {
                             
                         - }
                     - }
                 div.playerfield.field
-                    - for (var i = 11; i < 21; ++i) {
-                        div.card
-                            //img(id=i, src="images/cards/blue_eyes.png", alt="Blue Eyes White Dragon")
+                    - for (var i = 1; i < 11; ++i) {
+                        div(id="#{i}", class="card")
+                            img(id=i, src="images/cards/back.png", alt="Blue Eyes White Dragon")
                     - }
 
             section.opponent.player

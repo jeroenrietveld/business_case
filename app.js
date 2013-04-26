@@ -114,7 +114,7 @@ arduino_server.on('connection', function(socket){
     socket.write('SCLIEC');
     
     socket.on('data',function(data){
-        console.log('recieved data: ' + data);
+        console.log('received data: ' + data);
 
         data = data.toString();
 
@@ -127,12 +127,15 @@ arduino_server.on('connection', function(socket){
                 console.log(mBoard);
                 //set board client and board
                 manager.set(boardID, {client: mBoard.client, board: socket});
+                manager.setSession(socket.sessionID, {board: boardID})
                 //tell client a board was found
                 manager.get(boardID).client.emit('gotBoard');
             } else {
                 //no user logged in, handle
-                console.log('no user');
+                console.log('no user');   
             }
+        } else if(data.substr(0, 2) == 'GD') {
+
         }
     });
 });

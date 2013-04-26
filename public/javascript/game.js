@@ -14,3 +14,7 @@ socket.on('gotBoard', function(data){
 	console.log('got board');
 	socket.emit('getData');
 });
+
+socket.on('updateCards', function(data){
+	console.log('update cards');
+});

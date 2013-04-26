@@ -127,7 +127,7 @@ arduino_server.on('connection', function(socket){
                 console.log(mBoard);
                 //set board client and board
                 manager.set(boardID, {client: mBoard.client, board: socket});
-                manager.setSessions(socket.sessionID, {board: boardID})
+                manager.setSession(socket.sessionID, {board: boardID})
                 //tell client a board was found
                 manager.get(boardID).client.emit('gotBoard');
             } else {

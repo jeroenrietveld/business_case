@@ -30,10 +30,10 @@ section.info img {
 	margin:0;
 }
 section.battlefield {
-	width:50%;
+	width:75%;
 	height:100%;
 	position:absolute;
-	left:25%;
+	left:12.5%;
 }
 div.field {
 	width:75%;

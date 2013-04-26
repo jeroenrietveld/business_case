@@ -127,7 +127,7 @@ arduino_server.on('connection', function(socket){
                 console.log(mBoard);
                 //set board client and board
                 manager.set(boardID, {client: mBoard.client, board: socket});
-                manager.setSessions(socket.sessionID, {board: boardID})
+                manager.setSession(socket.sessionID, {board: boardID})
                 //tell client a board was found
                 manager.get(boardID).client.emit('gotBoard');
             } else {
@@ -136,7 +136,9 @@ arduino_server.on('connection', function(socket){
             }
         } else if(data.substr(0, 2) == 'GD') {
             var boardID = data.substr(2, 4);
-            manager.get(boardID).client.emit('updateCards');
+            var card1   = data.substr(6, 1);
+            var card2   = data.substr(7, 1);
+            manager.get(boardID).client.emit('updateCards', {card1: card1, card2: card2});
         }
     });
 });

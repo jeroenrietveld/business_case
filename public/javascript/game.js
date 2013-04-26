@@ -17,4 +17,5 @@ socket.on('gotBoard', function(data){
 
 socket.on('updateCards', function(data){
 	console.log('update cards');
+	console.log(data);
 });

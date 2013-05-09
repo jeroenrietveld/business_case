@@ -8,10 +8,6 @@ $(document).ready(function() {
 		$('section.info').find('img').attr('src', card);
 		$('section.info').show();
 	});
-
-	$('div.card').on('click', function(){
-			$(this).find('img').attr('src', );
-		});
 });
 
 socket.on('gotBoard', function(data){
@@ -20,10 +16,19 @@ socket.on('gotBoard', function(data){
 });
 
 socket.on('updateCards', function(data){
-	console.log('update cards');
-	console.log(data['card1']);
-	
-	for(data as card) {
-		
-	}
+	for (card in data) {
+		var id = data[card];
+
+		switch(id) {
+			case '1':
+				$('#'+card).attr('src', 'images/cards/blue_eyes.png');
+				break;
+			case '2':
+				$('#'+card).attr('src', 'images/cards/Summoned_Skull.jpg');
+				break;
+			default:
+				$('#'+card).attr('src', 'images/cards/back.png');
+				break;
+		}
+    }
 });
